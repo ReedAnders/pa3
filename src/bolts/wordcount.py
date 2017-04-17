@@ -30,5 +30,6 @@ class WordCountBolt(Bolt):
                                                                     self.pid))
         average = self.counter / self.total
 
+        print("DATA:",average, self.total)
         self.emit([average, self.total])
         # self.emit([word, self.counter[word]])
