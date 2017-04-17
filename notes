@@ -1,0 +1,4 @@
+sudo apt-get install virtualenv
+sudo mkdir -p data/virtualenvs
+sudo chmod 777 data/virtualenvs
+sudo ln -s /opt/apache-storm-1.0.2/bin/storm storm
