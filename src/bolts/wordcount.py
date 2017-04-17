@@ -25,14 +25,14 @@ class WordCountBolt(Bolt):
         number = tup.values[1]
         # self._increment(word, 10 if word == "dog" else 1)
         self._increment(score, number, 1)
-        if self.total % 1000 == 0:
-            self.logger.info("counted [{:,}] scores [pid={}]".format(self.total,
-                                                                    self.pid))
+
         average = self.counter / self.total
 
-        # Log start to file
-        # Log average and time to file
-        self.logger.info("average [{:,}] total [pid={}]".format(average,
+        if self.total % 1000 == 0:
+            self.logger.info("average [{:,}] total [pid={}]".format(average,
                                                                 self.total))
+            self.logger.info("counted [{:,}] scores [pid={}]".format(self.total,
+                                                                    self.pid))
+
         self.emit([average, self.total])
         # self.emit([word, self.counter[word]])
