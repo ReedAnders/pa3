@@ -8,7 +8,7 @@ from streamparse import Spout
 
 class WordSpout(Spout):
     # outputs = ['word']
-    outputs = ['score']
+    outputs = ['score','number']
 
     def initialize(self, stormconf, context):
         url = 'https://storage.googleapis.com/distsys-pa3-data/test2.xml'
@@ -24,7 +24,11 @@ class WordSpout(Spout):
         self.rows = ElementTree.iterparse(response.raw)
 
     def next_tuple(self):
-        score = next(self.rows)[1].get('Score')
-        self.emit([score])
+        _score = next(self.rows)[1].get('Score')
+        if _score:
+            number = next(self.rows)[1].get('Score')
+            self.emit(['score', number])
+        else:
+            pass
         # word = next(self.words)
         # self.emit([word])

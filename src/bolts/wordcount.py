@@ -10,24 +10,25 @@ class WordCountBolt(Bolt):
     # outputs = ['word', 'count']
 
     def initialize(self, conf, ctx):
-        self.counter = Counter()
+        self.counter = 0
         self.pid = os.getpid()
         self.total = 0
 
-    def _increment(self, score, inc_by):
+    def _increment(self, score, number, inc_by):
         # self.counter[word] += inc_by
-        self.counter['score_totals'] += score
+        self.counter += number
         self.total += inc_by
 
     def process(self, tup):
         # word = tup.values[0]
         score = tup.values[0]
+        number = tup.values[1]
         # self._increment(word, 10 if word == "dog" else 1)
-        self._increment(score, 1)
+        self._increment(score, number, 1)
         if self.total % 1000 == 0:
-            self.logger.info("counted [{:,}] words [pid={}]".format(self.total,
+            self.logger.info("counted [{:,}] scores [pid={}]".format(self.total,
                                                                     self.pid))
-        average = self.counter['score_totals'] / self.total
+        average = self.counter / self.total
 
         self.emit([average, self.total])
         # self.emit([word, self.counter[word]])
