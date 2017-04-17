@@ -24,11 +24,10 @@ class WordSpout(Spout):
         self.rows = ElementTree.iterparse(response.raw)
 
     def next_tuple(self):
-        _score = next(self.rows)[1].get('Score')
-        if _score:
+        try:
             number = next(self.rows)[1].get('Score')
             self.emit(['score', number])
-        else:
+        except Exception as e:
             pass
         # word = next(self.words)
         # self.emit([word])
