@@ -16,7 +16,7 @@ class WordCountBolt(Bolt):
 
     def _increment(self, score, number, inc_by):
         # self.counter[word] += inc_by
-        self.counter += number
+        self.counter += int(number)
         self.total += inc_by
 
     def process(self, tup):
