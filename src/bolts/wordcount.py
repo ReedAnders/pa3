@@ -30,6 +30,8 @@ class WordCountBolt(Bolt):
                                                                     self.pid))
         average = self.counter / self.total
 
+        # Log start to file
+        # Log average and time to file
         self.logger.info("average [{:,}] total [pid={}]".format(average,
                                                                 self.total))
         self.emit([average, self.total])

@@ -1,4 +1,6 @@
 from itertools import cycle
+import time
+import datetime
 
 import requests
 from xml.etree import ElementTree
@@ -11,6 +13,11 @@ class WordSpout(Spout):
     outputs = ['score','number']
 
     def initialize(self, stormconf, context):
+        tf = time.time()
+        ts = datetime.datetime.fromtimestamp(tf).strftime('%Y-%m-%d %H:%M:%S')
+        self.logger.info("init time {}".format(ts))
+
+        # hdlr = self.logging.FileHandler('/var/tmp/myapp.log')
         url = 'https://storage.googleapis.com/distsys-pa3-data/test2.xml'
         # response = requests.get(url)
         # self.rows = ElementTree.fromstring(response.content)
